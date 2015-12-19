@@ -2,6 +2,6 @@
 
 <% Artist.all.each do |artist|  %>
   <%= link_to artist[:name], artist_path(artist) %>
-<% end  %>
+<% end  %><br>
 
 <%= link_to "New artist", new_artist_path %>
