@@ -1,0 +1,9 @@
+<h2> <%= @playlist.name %> Playlist </h2>
+
+<ul>
+  <% @playlist.songs.each do |song| %>
+    <li><%= link_to song.title, song_path(song) %> by <%= song.artist.name %> </li>
+  <% end %>
+</ul>
+<h4> <%= link_to "Edit Playlist", edit_playlist_path %> </h4>
+<h5> <%= link_to "All Playlists", playlists_path %> </h5>
