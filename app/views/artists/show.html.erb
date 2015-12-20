@@ -1,5 +1,12 @@
 <h1> <%= @artist[:name] %> </h1>
 <%= image_tag @artist.image_path %><br>
-<h5> <%= link_to "Edit", edit_artist_path %> </h5><br>
-<h5> <%= link_to "Delete", artist_path(@artist), method: :delete %> </h5><br>
-<h6> <%= link_to "New Song", new_artist_song_path(@artist) %> </h6>
+<ul>
+  <h3>Songs:</h3>
+  <% @artist.songs.order(:title).each do |song| %>
+    <li><%= link_to song.title, song_path(@artist.songs.where(title: song.title).first) %></li>
+    <% end %>
+</ul>
+
+<h5> <%= link_to "Add New Song", new_artist_song_path(@artist) %> </h5>
+<h5> <%= link_to "Edit #{@artist.name} info", edit_artist_path %> </h5>
+<h5> <%= link_to "Delete #{@artist.name}", artist_path(@artist), method: :delete %> </h5><br>

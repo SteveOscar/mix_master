@@ -1,4 +1,4 @@
-class SongsController < ApplicationController
+ class SongsController < ApplicationController
   def index
   end
 
@@ -9,18 +9,25 @@ class SongsController < ApplicationController
 
   def create
     @artist = Artist.find(params[:artist_id])
-    @song = @artist.songs.create(song_params)
+    @song = @artist.songs.new(song_params)
 
-    redirect_to song_path(@song)
+    if @song.save
+      redirect_to song_path(@song)
+    else
+      render :new
+    end
   end
 
-  # def edit
-  #
-  # end
-  #
-  # def update
+  def edit
+    @song = Song.find(params[:id])
+    @artist = @song.artist
+  end
 
-  # end
+  def update
+    @song = Song.find(params[:id])
+    @song.update_attributes(song_params)
+    redirect_to song_path(@song)
+  end
 
   def show
     @song = Song.find(params[:id])

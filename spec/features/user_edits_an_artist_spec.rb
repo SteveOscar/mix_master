@@ -1,4 +1,4 @@
-RSpec.feature "User submits a new artist" do
+RSpec.feature "User edits an artist" do
   scenario "they see the page for the individual artists" do
     artist_image_path = "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"
     @artist = Artist.create(name: "Bob Wayne", image_path: artist_image_path)
