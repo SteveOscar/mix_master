@@ -3,12 +3,18 @@ require 'rails_helper'
 RSpec.feature "User edits a playlists" do
   scenario "they see the page for the edited playlist" do
     playlists = create_list(:playlist_with_songs, 2)
-
     visit playlist_path(Playlist.all.first)
     click_on "Edit Playlist"
-    playlists.each do |playlist|
-      expect(page).to have_link playlist.name, href: playlist_path(playlist)
-    end
+
+    expect(page).to have_content("Playlist 3")
+
+    fill_in "playlist_name", with: "Grid Day"
+    check("song-#{Song.all[3][:id]}")
+    uncheck("song-#{Song.all.first[:id]}")
+    click_on "Update Playlist"
+
+    expect(page).to have_content("Grid Day")
+    expect(page).should_not have_content("Playlist 3")
   end
 end
 
