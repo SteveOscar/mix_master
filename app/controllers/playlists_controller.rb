@@ -7,8 +7,8 @@ class PlaylistsController < ApplicationController
  end
 
  def create
-   @playlist = Playlist.create(playlist_params)
-   redirect_to @playlist
+   @playlist = Playlist.new(playlist_params)
+   @playlist.save ? (redirect_to @playlist) : (render :new)
  end
 
  def show
@@ -22,14 +22,12 @@ class PlaylistsController < ApplicationController
 
  def update
    @playlist = Playlist.find(params[:id])
-   @playlist.update_attributes(playlist_params)
-   redirect_to @playlist
+   if @playlist.update_attributes(playlist_params)
+     redirect_to @playlist
+   else
+     render :edit
+   end
  end
-
-
- # def destroy
- #
- # end
 
 private
 

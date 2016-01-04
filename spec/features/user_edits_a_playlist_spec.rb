@@ -1,22 +1,24 @@
 require 'rails_helper'
 
-RSpec.feature "User edits a playlists" do
-  scenario "they see the page for the edited playlist" do
-    playlists = create_list(:playlist_with_songs, 2)
-    visit playlist_path(Playlist.all.first)
-    click_on "Edit Playlist"
+RSpec.feature "User edits an existing playlist" do
+  scenario "they see the updated data for the individual playlist" do
+    playlist             = create(:playlist_with_songs)
+    first, second, third = playlist.songs
+    new_song             = create(:song, title: "New Song")
 
-    expect(page).to have_content("Playlist 3")
-
-    fill_in "playlist_name", with: "Grid Day"
-    check("song-#{Song.all[3][:id]}")
-    uncheck("song-#{Song.all.first[:id]}")
+    visit playlist_path(playlist)
+    click_on "Edit"
+    uncheck("song-#{first.id}")
+    check("song-#{new_song.id}")
     click_on "Update Playlist"
 
-    expect(page).to have_content("Grid Day")
-    expect(page).should_not have_content("Playlist 3")
+    expect(page).to have_content playlist.name
+    expect(page).to_not have_content first.title
+    expect(page).to have_content new_song.title
   end
 end
+
+
 
 #
 # As a user
